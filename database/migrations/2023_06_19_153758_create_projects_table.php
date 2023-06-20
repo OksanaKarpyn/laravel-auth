@@ -17,9 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('title')->unque();
             $table->text('content');
-            $table->string('price');
             $table->text('thumb');
-            $table->string('type');
+            $table->string('slug');
             $table->timestamps();
         });
     }

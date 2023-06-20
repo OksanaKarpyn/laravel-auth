@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Admin\Project;
 
-class ProjectController extends Controller
+class DashboardController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,8 @@ class ProjectController extends Controller
     public function index()
     {
         //
-        $posts = Project::all();
-       return view('Admin.posts.index',compact('posts'));
+        $projects= Project::all();
+        return view('Admin.dashboard',compact('projects'));
     }
 
     /**
@@ -50,8 +50,7 @@ class ProjectController extends Controller
     public function show($id)
     {
         //
-        $post =  Project::findOrFail($id);
-        return view('Admin.posts.show',compact('post'));
+       
     }
 
     /**
