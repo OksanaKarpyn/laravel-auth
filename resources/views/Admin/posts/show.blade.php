@@ -10,8 +10,19 @@
                     <h5 class="card-title">{{$post['title']}}</h5>
                   <p class="card-text">{{$post['content']}}</p>
                 </div>
+                <a class="text-uppercase text-white text-decoration-none btn btn-outline-light"
+                href="{{ route('admin.posts.edit', $post) }}"> modifica elemento </a>
+
+                <form action="{{ route('admin.posts.destroy', $post['id']) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger bg-danger-subtle text-danger me-2 w-100">
+                      <i class="fa-regular fa-trash-can text-danger me-2"></i>
+                      Delete
+                    </button>
+                  </form>
               </div>
-        </div>
+            </div>
     </div>
 </div>
 @endsection

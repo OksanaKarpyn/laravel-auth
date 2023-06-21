@@ -40,6 +40,12 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate(
+            [
+               'title'=> ['required','max:30'] 
+            ]
+        );
+     
         //
         $form_data = $request->all();
         $new_post = new Project();
@@ -72,6 +78,8 @@ class ProjectController extends Controller
     public function edit($id)
     {
         //
+        $mod_post =  Project::find($id);
+        return view('Admin.posts.edit',compact('mod_post'));
     }
 
     /**
@@ -81,9 +89,19 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id )
     {
-        //
+        $request->validate(
+            [
+               'title'=> ['required','max:30'] 
+            ]
+        );
+     
+        $form_data = $request->all();
+        $mod_post =  Project::find($id);
+        $mod_post->update($form_data);
+       
+        return redirect()->route('admin.posts.index');
     }
 
     /**
@@ -95,5 +113,8 @@ class ProjectController extends Controller
     public function destroy($id)
     {
         //
+        $mod_post =  Project::find($id);
+        $mod_post->delete();
+        return redirect()->route('admin.posts.index');
     }
 }
