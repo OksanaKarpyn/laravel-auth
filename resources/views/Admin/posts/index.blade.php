@@ -2,11 +2,12 @@
 @section('content')
 
     <div class="container">
+        <a class="text-uppercase text-white text-decoration-none btn btn-outline-light" href="{{ route('admin.posts.create') }}"> create new post</a>
         <div class="row">
        
             @forelse ($posts as $elem)
             <div class="col-4 d-flex my-4">
-            <a href="{{ route('admin.posts.show',$elem)}}">
+            <a class="text-decoration-none" href="{{ route('admin.posts.show',$elem)}}">
               <div class="card" style="width: 18rem;">
                 <img src="https://picsum.photos/200/300" class="card-img-top" alt="...">
                 <div class="card-body">
@@ -21,6 +22,7 @@
               </div>
             </a>
             </div>
+            
             @empty
                 <h2>non ci sono elementi</h2>
             @endforelse   

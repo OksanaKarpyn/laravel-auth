@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->string('title')->unque();
             $table->text('content');
-            $table->text('thumb');
             $table->string('slug');
             $table->timestamps();
         });

@@ -30,6 +30,7 @@ Route::middleware('auth','verified' )->prefix('admin')->name('admin.')->group(fu
     //http://127.0.0.1:8000/admin
     Route::get('/',[DashboardController::class, 'index'])->name('dashboard');
     Route::resource('/posts', ProjectController::class);
+    
 });
 
 require __DIR__.'/auth.php';

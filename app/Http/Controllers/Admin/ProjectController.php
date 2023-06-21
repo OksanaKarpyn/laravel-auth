@@ -28,6 +28,8 @@ class ProjectController extends Controller
     public function create()
     {
         //
+        return view ('Admin.posts.create');
+        
     }
 
     /**
@@ -39,6 +41,11 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         //
+        $form_data = $request->all();
+        $new_post = new Project();
+        $new_post -> fill($form_data);
+        $new_post -> save();
+        return redirect()->route('admin.posts.index');
     }
 
     /**
@@ -47,11 +54,13 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id )
     {
         //
         $post =  Project::findOrFail($id);
         return view('Admin.posts.show',compact('post'));
+       
+
     }
 
     /**
