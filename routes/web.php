@@ -31,6 +31,12 @@ Route::middleware('auth','verified' )->prefix('admin')->name('admin.')->group(fu
     Route::get('/',[DashboardController::class, 'index'])->name('dashboard');
     Route::resource('/posts', ProjectController::class);
     
+    // ->parameters(
+    //     [
+    //         'posts' => 'title:slug'
+    //     ]
+    // );
+    
 });
 
 require __DIR__.'/auth.php';

@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreProjectRequest;
+use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Admin\Project;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -38,18 +41,34 @@ class ProjectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreProjectRequest $request)
     {
-        $request->validate(
-            [
-               'title'=> ['required','max:30'] 
-            ]
-        );
+        // $request->validate(
+        //     [
+        //        'title'=> ['required','max:30'] 
+        //     ]
+        // );
      
         //
+   
+        $form_data = $request->validated();
+        //dd($form_data);
         $form_data = $request->all();
+        //dd($form_data);
+
+        //inserimento img
+            if( $request ->hasFile('image')){
+                //public folder esiste ,post_image,cartella che creo 
+                $path = Storage::disk('public')->put('post_images', $request->image);
+                $form_data['image'] = $path;
+            };
+
+
+
         $new_post = new Project();
         $new_post -> fill($form_data);
+         
+
         $new_post -> save();
         return redirect()->route('admin.posts.index');
     }
@@ -89,16 +108,28 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id )
+    public function update(UpdateProjectRequest $request, $id )
     {
-        $request->validate(
-            [
-               'title'=> ['required','max:30'] 
-            ]
-        );
-     
-        $form_data = $request->all();
-        $mod_post =  Project::find($id);
+        // $request->validate(
+        //     [
+        //        'title'=> ['required','max:30'] 
+        //     ]
+        // );
+       // dd($form_data);
+        $form_data = $request->validated();
+
+         $form_data = $request->all();
+         if( $request ->hasFile('image')){
+            
+            if( $request->image) {
+                Storage::delete($request->image);
+                 }
+            //public folder esiste ,post_image,cartella che creo 
+            $path = Storage::disk('public')->put('post_images', $request->image);
+            $form_data['image'] = $path;
+        };
+         
+        $mod_post = Project::find($id);
         $mod_post->update($form_data);
        
         return redirect()->route('admin.posts.index');
@@ -111,9 +142,13 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
+    {   
         //
         $mod_post =  Project::find($id);
+        if( $mod_post->image) {
+            Storage::delete($mod_post->image);
+             }
+
         $mod_post->delete();
         return redirect()->route('admin.posts.index');
     }

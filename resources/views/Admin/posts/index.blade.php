@@ -9,7 +9,7 @@
             <div class="col-4 d-flex my-4">
             <a class="text-decoration-none" href="{{ route('admin.posts.show',$elem)}}">
               <div class="card" style="width: 18rem;">
-                <img src="https://picsum.photos/200/300" class="card-img-top" alt="...">
+                <img src="{{asset('storage/' . $elem->image)}}" class="card-img-top" alt="Simone">
                 <div class="card-body">
                   <h5 class="card-title">{{$elem['title']}}</h5>
                   <h6 class="card-subtitle mb-2 text-body-secondary">{{$elem['type']}}</h6>
